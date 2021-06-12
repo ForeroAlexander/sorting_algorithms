@@ -3,11 +3,13 @@
  *bubble_sort - Algoritm bubble
  *@array: list of numbers
  *@size: lenght of the Array
- *Return: Sorted array*/
+ *Return: Sorted array
+ */
 void bubble_sort(int *array, size_t size)
 {
 	size_t i, max_complex;
 	int tmp;
+
 	for (max_complex = size - 1; max_complex > 0 ; max_complex--)
 	{
 		for (i = 0; i < max_complex; i++)
