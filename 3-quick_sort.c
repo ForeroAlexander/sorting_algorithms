@@ -23,11 +23,13 @@ void quick_sort_recursive(int *array, int start, int end, size_t size)
 		if (array[j] < array[pivote])
 		{
 			start_aux++;
-			tmp = array[start_aux];
-			array[start_aux] = array[j];
-			array[j] = tmp;
 			if (array[j] != array[start_aux])
+			{
+				tmp = array[start_aux];
+				array[start_aux] = array[j];
+				array[j] = tmp;
 				print_array(array, size);
+			}
 		}
 		j++;
 	}
