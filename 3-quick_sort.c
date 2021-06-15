@@ -1,23 +1,21 @@
 #include "sort.h"
 
 /**
- * quick_sort_recursive - Quick sort algoritm
- *
- * @array: list of numbers
- * @start: where start
- * @end: where end
- * @size: size of the array
+ *partition - Lomuto partition
+ *@array: list of numbers
+ *@start: where start
+ *@end: where end
+ *@size: size of the array
+ *Return: Position
  */
-void quick_sort_recursive(int *array, int start, int end, size_t size)
+int partition(int *array, int start, int end, size_t size)
 {
-	if (start >= end || size <= 1)
-		return;
-
 	int start_aux, j, pivote, tmp;
 
 	pivote = end;
 	start_aux = start - 1;
 	j = start;
+
 	while (j <= end - 1)
 	{
 		if (array[j] < array[pivote])
@@ -40,9 +38,28 @@ void quick_sort_recursive(int *array, int start, int end, size_t size)
 		array[end] = tmp;
 		print_array(array, size);
 	}
-	pivote = start_aux + 1;
-	quick_sort_recursive(array, start, pivote - 1, size);
-	quick_sort_recursive(array, pivote + 1, end, size);
+	return (start_aux + 1);
+}
+
+
+/**
+ * quick_sort_recursive - Quick sort algoritm
+ *
+ * @array: list of numbers
+ * @start: where start
+ * @end: where end
+ * @size: size of the array
+ */
+void quick_sort_recursive(int *array, int start, int end, size_t size)
+{
+	int p;
+
+	if (start >= end || size < 2)
+		return;
+
+	p = partition(array, start, end, size);
+	quick_sort_recursive(array, start, p - 1, size);
+	quick_sort_recursive(array, p + 1, end, size);
 }
 
 /**
