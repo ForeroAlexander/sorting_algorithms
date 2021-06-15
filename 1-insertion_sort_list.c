@@ -6,38 +6,42 @@
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *previus = NULL, *current = NULL, *tmp = NULL, *bigger = NULL;
+	int wall = 0;
 
-	if (!list || *list)
+	if (!list || !*list)
 		return;
-	bigger = previus = *list;
-	current = previus->next;
-	while (bigger)
+
+	tmp = *list;
+	while (tmp)
 	{
-		while (current)
+		if (tmp->prev != NULL)
 		{
-			if (previus->n > current->n)
+			current = tmp;
+			wall = 0;
+			while (current && current->prev->n > current->n)
 			{
-				if (previus->prev == NULL)
-					*list = current;
+				previus = current->prev;
+				bigger = current->next;
+
 				if (previus->prev)
 					previus->prev->next = current;
-				current->prev = previus->prev;
-				previus->prev = current;
-				previus->next = current->next;
-				if (previus->next)
-					previus->next->prev = previus;
-				current->next = previus;
+				else
+				{
+					*list = current;
+					wall = 1;
+				}
+				if (bigger)
+					bigger->prev = previus;
 
-				tmp = previus;
-				previus = current;
-				current = tmp;
+				current->prev = previus->prev;
+				current->next = previus;
+				previus->prev = current;
+				previus->next = bigger;
 				print_list(*list);
+				if (wall)
+					break;
 			}
-			previus = previus->next;
-			current = current->next;
 		}
-		bigger = bigger->next;
-		previus = *list;
-		current = previus->next;
+		tmp = tmp->next;
 	}
 }
